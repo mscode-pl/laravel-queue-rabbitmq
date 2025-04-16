@@ -1,6 +1,6 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Connection;
+namespace MsCodePL\LaravelQueueRabbitMQ\Queue\Connection;
 
 use Illuminate\Support\Arr;
 use PhpAmqpLib\Connection\AMQPConnectionConfig;

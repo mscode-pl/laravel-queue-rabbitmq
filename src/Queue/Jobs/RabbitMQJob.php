@@ -1,6 +1,6 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Jobs;
+namespace MsCodePL\LaravelQueueRabbitMQ\Queue\Jobs;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -10,8 +10,8 @@ use Illuminate\Support\Arr;
 use PhpAmqpLib\Exception\AMQPProtocolChannelException;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Horizon\RabbitMQQueue as HorizonRabbitMQQueue;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue;
+use MsCodePL\LaravelQueueRabbitMQ\Horizon\RabbitMQQueue as HorizonRabbitMQQueue;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\RabbitMQQueue;
 
 class RabbitMQJob extends Job implements JobContract
 {
@@ -20,21 +20,21 @@ class RabbitMQJob extends Job implements JobContract
      *
      * @var RabbitMQQueue
      */
-    protected $rabbitmq;
+    protected RabbitMQQueue $rabbitmq;
 
     /**
      * The RabbitMQ message instance.
      *
      * @var AMQPMessage
      */
-    protected $message;
+    protected AMQPMessage $message;
 
     /**
      * The JSON decoded version of "$message".
      *
      * @var array
      */
-    protected $decoded;
+    protected array $decoded;
 
     public function __construct(
         Container $container,

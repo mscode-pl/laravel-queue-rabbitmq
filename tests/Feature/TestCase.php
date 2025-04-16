@@ -1,23 +1,24 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Tests\Feature;
+namespace MsCodePL\LaravelQueueRabbitMQ\Tests\Feature;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\DatabaseTransactionsManager;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Str;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob;
+use MsCodePL\LaravelQueueRabbitMQ\Tests\Mocks\TestEncryptedJob;
+use MsCodePL\LaravelQueueRabbitMQ\Tests\Mocks\TestJob;
+use MsCodePL\LaravelQueueRabbitMQ\Tests\TestCase as BaseTestCase;
 use PhpAmqpLib\Exception\AMQPProtocolChannelException;
 use RuntimeException;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Tests\Mocks\TestEncryptedJob;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Tests\Mocks\TestJob;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Tests\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
     /**
      * @throws AMQPProtocolChannelException
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -40,17 +41,20 @@ abstract class TestCase extends BaseTestCase
         parent::tearDown();
     }
 
-    public function testSizeDoesNotThrowExceptionOnUnknownQueue(): void
+    public function test_size_does_not_throw_exception_on_unknown_queue(): void
     {
         $this->assertEmpty(0, Queue::size(Str::random()));
     }
 
-    public function testPopNothing(): void
+    public function test_pop_nothing(): void
     {
         $this->assertNull(Queue::pop('foo'));
     }
 
-    public function testPushRaw(): void
+    /**
+     * @throws BindingResolutionException
+     */
+    public function test_push_raw(): void
     {
         Queue::pushRaw($payload = Str::random());
 
@@ -68,9 +72,12 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testPush(): void
+    /**
+     * @throws BindingResolutionException
+     */
+    public function test_push(): void
     {
-        Queue::push(new TestJob());
+        Queue::push(new TestJob);
 
         sleep(1);
 
@@ -95,7 +102,7 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testPushAfterCommit(): void
+    public function test_push_after_commit(): void
     {
         $transaction = new DatabaseTransactionsManager;
 
@@ -122,7 +129,10 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testLaterRaw(): void
+    /**
+     * @throws BindingResolutionException
+     */
+    public function test_later_raw(): void
     {
         $payload = Str::random();
         $data = [Str::random() => Str::random()];
@@ -152,9 +162,12 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testLater(): void
+    /**
+     * @throws BindingResolutionException
+     */
+    public function test_later(): void
     {
-        Queue::later(3, new TestJob());
+        Queue::later(3, new TestJob);
 
         sleep(1);
 
@@ -179,7 +192,7 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testBulk(): void
+    public function test_bulk(): void
     {
         $count = 100;
         $jobs = [];
@@ -195,9 +208,12 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame($count, Queue::size());
     }
 
-    public function testPushEncrypted(): void
+    /**
+     * @throws BindingResolutionException
+     */
+    public function test_push_encrypted(): void
     {
-        Queue::push(new TestEncryptedJob());
+        Queue::push(new TestEncryptedJob);
 
         sleep(1);
 
@@ -222,7 +238,7 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testPushEncryptedAfterCommit(): void
+    public function test_push_encrypted_after_commit(): void
     {
         $transaction = new DatabaseTransactionsManager;
 
@@ -249,9 +265,12 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testEncryptedLater(): void
+    /**
+     * @throws BindingResolutionException
+     */
+    public function test_encrypted_later(): void
     {
-        Queue::later(3, new TestEncryptedJob());
+        Queue::later(3, new TestEncryptedJob);
 
         sleep(1);
 
@@ -276,7 +295,7 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testEncryptedBulk(): void
+    public function test_encrypted_bulk(): void
     {
         $count = 100;
         $jobs = [];
@@ -292,7 +311,7 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame($count, Queue::size());
     }
 
-    public function testReleaseRaw(): void
+    public function test_release_raw(): void
     {
         Queue::pushRaw($payload = Str::random());
 
@@ -318,9 +337,9 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testRelease(): void
+    public function test_release(): void
     {
-        Queue::push(new TestJob());
+        Queue::push(new TestJob);
 
         sleep(1);
 
@@ -344,7 +363,7 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testReleaseWithDelayRaw(): void
+    public function test_release_with_delay_raw(): void
     {
         Queue::pushRaw($payload = Str::random());
 
@@ -375,9 +394,9 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testReleaseInThePast(): void
+    public function test_release_in_the_past(): void
     {
-        Queue::push(new TestJob());
+        Queue::push(new TestJob);
 
         $job = Queue::pop();
         $job->release(-3);
@@ -390,9 +409,9 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testReleaseAndReleaseWithDelayAttempts(): void
+    public function test_release_and_release_with_delay_attempts(): void
     {
-        Queue::push(new TestJob());
+        Queue::push(new TestJob);
 
         sleep(1);
 
@@ -417,9 +436,9 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(0, Queue::size());
     }
 
-    public function testDelete(): void
+    public function test_delete(): void
     {
-        Queue::push(new TestJob());
+        Queue::push(new TestJob);
 
         $job = Queue::pop();
 
@@ -431,9 +450,9 @@ abstract class TestCase extends BaseTestCase
         $this->assertNull(Queue::pop());
     }
 
-    public function testFailed(): void
+    public function test_failed(): void
     {
-        Queue::push(new TestJob());
+        Queue::push(new TestJob);
 
         $job = Queue::pop();
 

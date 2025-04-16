@@ -1,6 +1,6 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Tests\Mocks;
+namespace MsCodePL\LaravelQueueRabbitMQ\Tests\Mocks;
 
 use PhpAmqpLib\Connection\AMQPConnectionConfig;
 use PhpAmqpLib\Connection\AMQPSSLConnection;

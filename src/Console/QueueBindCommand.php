@@ -1,14 +1,14 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Console;
+namespace MsCodePL\LaravelQueueRabbitMQ\Console;
 
 use Exception;
 use Illuminate\Console\Command;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Connectors\RabbitMQConnector;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\Connectors\RabbitMQConnector;
 
 class QueueBindCommand extends Command
 {
-    protected $signature = 'rabbitmq:queue-bind                          
+    protected $signature = 'rabbitmq:queue-bind
                            {queue}
                            {exchange}
                            {connection=rabbitmq : The name of the queue connection to use}

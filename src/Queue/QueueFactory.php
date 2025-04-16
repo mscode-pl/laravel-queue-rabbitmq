@@ -1,9 +1,9 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Queue;
+namespace MsCodePL\LaravelQueueRabbitMQ\Queue;
 
 use Illuminate\Support\Arr;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Horizon\RabbitMQQueue as HorizonRabbitMQQueue;
+use MsCodePL\LaravelQueueRabbitMQ\Horizon\RabbitMQQueue as HorizonRabbitMQQueue;
 
 class QueueFactory
 {

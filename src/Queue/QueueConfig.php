@@ -1,8 +1,8 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Queue;
+namespace MsCodePL\LaravelQueueRabbitMQ\Queue;
 
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob;
 
 class QueueConfig
 {

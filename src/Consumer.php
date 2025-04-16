@@ -1,39 +1,32 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ;
+namespace MsCodePL\LaravelQueueRabbitMQ;
 
 use Exception;
 use Illuminate\Container\Container;
 use Illuminate\Queue\Worker;
 use Illuminate\Queue\WorkerOptions;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\RabbitMQQueue;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Message\AMQPMessage;
 use Throwable;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue;
 
 class Consumer extends Worker
 {
-    /** @var Container */
-    protected $container;
+    protected Container $container;
 
-    /** @var string */
-    protected $consumerTag;
+    protected string $consumerTag;
 
-    /** @var int */
-    protected $prefetchSize;
+    protected int $prefetchSize;
 
-    /** @var int */
-    protected $maxPriority;
+    protected int $maxPriority;
 
-    /** @var int */
-    protected $prefetchCount;
+    protected int $prefetchCount;
 
-    /** @var AMQPChannel */
-    protected $channel;
+    protected AMQPChannel $channel;
 
-    /** @var object|null */
-    protected $currentJob;
+    protected ?object $currentJob;
 
     public function setContainer(Container $value): void
     {
@@ -65,11 +58,10 @@ class Consumer extends Worker
      *
      * @param  string  $connectionName
      * @param  string  $queue
-     * @return int
      *
      * @throws Throwable
      */
-    public function daemon($connectionName, $queue, WorkerOptions $options)
+    public function daemon($connectionName, $queue, WorkerOptions $options): int
     {
         if ($this->supportsAsyncSignals()) {
             $this->listenForSignals();
@@ -199,7 +191,7 @@ class Consumer extends Worker
      * @param  WorkerOptions|null  $options
      * @return int
      */
-    public function stop($status = 0, $options = null)
+    public function stop($status = 0, $options = null): int
     {
         // Tell the server you are going to stop consuming.
         // It will finish up the last message and not send you any more.

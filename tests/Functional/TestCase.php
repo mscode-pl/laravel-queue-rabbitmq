@@ -1,12 +1,12 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Tests\Functional;
+namespace MsCodePL\LaravelQueueRabbitMQ\Tests\Functional;
 
 use Exception;
+use MsCodePL\LaravelQueueRabbitMQ\Tests\TestCase as BaseTestCase;
 use PhpAmqpLib\Channel\AMQPChannel;
 use ReflectionClass;
 use ReflectionException;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Tests\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -236,7 +236,10 @@ abstract class TestCase extends BaseTestCase
         return $property->getValue($object);
     }
 
-    public function testConnectChannel(): void
+    /**
+     * @throws Exception
+     */
+    public function test_connect_channel(): void
     {
         $queue = $this->connection();
         $this->assertFalse($queue->getConnection()->isConnected());
@@ -248,7 +251,10 @@ abstract class TestCase extends BaseTestCase
         $this->assertTrue($channel->is_open());
     }
 
-    public function testReconnect(): void
+    /**
+     * @throws Exception
+     */
+    public function test_reconnect(): void
     {
         $queue = $this->connection();
         $this->assertFalse($queue->getConnection()->isConnected());

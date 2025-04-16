@@ -1,6 +1,6 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Tests\Mocks;
+namespace MsCodePL\LaravelQueueRabbitMQ\Tests\Mocks;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,7 +10,7 @@ class TestJob implements ShouldQueue
 {
     use Dispatchable, Queueable;
 
-    public $i;
+    public mixed $i;
 
     public function __construct($i = 0)
     {

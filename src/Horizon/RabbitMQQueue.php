@@ -1,6 +1,6 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Horizon;
+namespace MsCodePL\LaravelQueueRabbitMQ\Horizon;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -10,8 +10,8 @@ use Laravel\Horizon\Events\JobPushed;
 use Laravel\Horizon\Events\JobReserved;
 use Laravel\Horizon\JobPayload;
 use PhpAmqpLib\Exception\AMQPProtocolChannelException;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue as BaseRabbitMQQueue;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\RabbitMQQueue as BaseRabbitMQQueue;
 
 class RabbitMQQueue extends BaseRabbitMQQueue
 {
@@ -60,7 +60,7 @@ class RabbitMQQueue extends BaseRabbitMQQueue
      *
      * @throws BindingResolutionException
      */
-    public function later($delay, $job, $data = '', $queue = null): mixed
+    public function later($delay, $job, $data = '', $queue = null): string|int|\Illuminate\Support\HigherOrderTapProxy|null
     {
         $payload = (new JobPayload($this->createPayload($job, $data)))->prepare($job)->value;
 
@@ -84,12 +84,12 @@ class RabbitMQQueue extends BaseRabbitMQQueue
     /**
      * Fire the job deleted event.
      *
-     * @param  string  $queue
-     * @param  RabbitMQJob  $job
+     * @param string $queue
+     * @param RabbitMQJob $job
      *
      * @throws BindingResolutionException
      */
-    public function deleteReserved($queue, $job): void
+    public function deleteReserved(string $queue, RabbitMQJob $job): void
     {
         $this->event($this->getQueue($queue), new JobDeleted($job, $job->getRawBody()));
     }
@@ -97,12 +97,12 @@ class RabbitMQQueue extends BaseRabbitMQQueue
     /**
      * Fire the given event if a dispatcher is bound.
      *
-     * @param  string  $queue
+     * @param string $queue
      * @param  mixed  $event
      *
      * @throws BindingResolutionException
      */
-    protected function event($queue, $event): void
+    protected function event(string $queue, mixed $event): void
     {
         if ($this->container && $this->container->bound(Dispatcher::class)) {
             $this->container->make(Dispatcher::class)->dispatch(

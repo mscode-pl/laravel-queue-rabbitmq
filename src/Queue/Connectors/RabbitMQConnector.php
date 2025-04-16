@@ -1,6 +1,6 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Connectors;
+namespace MsCodePL\LaravelQueueRabbitMQ\Queue\Connectors;
 
 use Exception;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -8,11 +8,11 @@ use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Queue\Connectors\ConnectorInterface;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\WorkerStopping;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Horizon\Listeners\RabbitMQFailedEvent;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Horizon\RabbitMQQueue as HorizonRabbitMQQueue;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Connection\ConnectionFactory;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\QueueFactory;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\RabbitMQQueue;
+use MsCodePL\LaravelQueueRabbitMQ\Horizon\Listeners\RabbitMQFailedEvent;
+use MsCodePL\LaravelQueueRabbitMQ\Horizon\RabbitMQQueue as HorizonRabbitMQQueue;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\Connection\ConnectionFactory;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\QueueFactory;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\RabbitMQQueue;
 
 class RabbitMQConnector implements ConnectorInterface
 {

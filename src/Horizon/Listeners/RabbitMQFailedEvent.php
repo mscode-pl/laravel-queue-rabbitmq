@@ -1,11 +1,11 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Horizon\Listeners;
+namespace MsCodePL\LaravelQueueRabbitMQ\Horizon\Listeners;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Queue\Events\JobFailed as LaravelJobFailed;
 use Laravel\Horizon\Events\JobFailed as HorizonJobFailed;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob;
 
 class RabbitMQFailedEvent
 {
@@ -14,7 +14,7 @@ class RabbitMQFailedEvent
      *
      * @var Dispatcher
      */
-    public $events;
+    public Dispatcher $events;
 
     /**
      * Create a new listener instance.

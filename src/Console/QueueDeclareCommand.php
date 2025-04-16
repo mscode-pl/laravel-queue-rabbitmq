@@ -1,10 +1,10 @@
 <?php
 
-namespace VladimirYuldashev\LaravelQueueRabbitMQ\Console;
+namespace MsCodePL\LaravelQueueRabbitMQ\Console;
 
 use Exception;
 use Illuminate\Console\Command;
-use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Connectors\RabbitMQConnector;
+use MsCodePL\LaravelQueueRabbitMQ\Queue\Connectors\RabbitMQConnector;
 
 class QueueDeclareCommand extends Command
 {
