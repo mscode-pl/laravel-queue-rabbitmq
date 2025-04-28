@@ -5,6 +5,8 @@ RabbitMQ Queue driver for Laravel
 [![Total Downloads](https://poser.pugx.org/vladimir-yuldashev/laravel-queue-rabbitmq/downloads?format=flat-square)](https://packagist.org/packages/vladimir-yuldashev/laravel-queue-rabbitmq)
 [![License](https://poser.pugx.org/vladimir-yuldashev/laravel-queue-rabbitmq/license?format=flat-square)](https://packagist.org/packages/vladimir-yuldashev/laravel-queue-rabbitmq)
 
+# ⚠️ DISCONTINUED, [USE ORIGINAL REPO](https://github.com/vyuldashev/laravel-queue-rabbitmq) ⚠️
+
 ## Support Policy
 
 Only the latest version will get new features. Bug fixes will be provided using the following scheme:
